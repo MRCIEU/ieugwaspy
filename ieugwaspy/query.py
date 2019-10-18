@@ -1,5 +1,5 @@
 import ieugwaspy.constants as cons
-import json, urllib.request
+import json, requests
 
 def api_query(path, query="", access_token=cons.api_token):
     '''Query the API and return the data
@@ -19,9 +19,8 @@ def api_query(path, query="", access_token=cons.api_token):
         url = '{}{}?query={}&access_token={}'.format(cons.option['mrbaseapi'],path,query,access_token)
     else:
         url = '{}{}?access_token={}'.format(cons.option['mrbaseapi'],path,access_token)
-    req = urllib.request.Request(url)
-    data = urllib.request.urlopen(req).read()
-    data = json.loads(data.decode('utf-8'))
+    response = requests.get(url)
+    data = json.loads(response.text)
     return(data)
 
 def api_status():
