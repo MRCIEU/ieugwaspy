@@ -1,5 +1,5 @@
 import ieugwaspy.constants as cons
-def toggle_api(url="test"):
+def toggle_api(url="prod"):
     '''Toggle API URL (no return value)
 
     Parameters:
