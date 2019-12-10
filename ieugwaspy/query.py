@@ -1,4 +1,5 @@
 import ieugwaspy.constants as cons
+import ieugwaspy.variants as variants
 import json, requests
 
 def api_query(path, query="", access_token=cons.api_token):
@@ -51,3 +52,34 @@ def gwasinfo(id = "", access_token = cons.api_token):
         data = api_query('gwasinfo/list', access_token=access_token)
     return(data)
 
+def phewas(variants, pval = 0.00001, access_token = cons.api_token):
+    '''Perform PheWAS of variant(s)
+
+    Parameters:
+        variants: list of variants
+        pval: p-value threshold
+        access_token: the OAuth access token
+
+    Returns:
+        data: json object as returned by API
+
+    '''
+    rsid = variants_to_rsid(variants)
+    data = api_query('phewas/{}'.format(variants,pval,), access_token=access_token)
+    return(data)
+
+
+# phewas <- function(variants, pval = 0.00001, access_token=check_access_token())
+# {
+# 	rsid <- variants_to_rsid(variants)
+# 	out <- api_query("phewas", query=list(
+# 		rsid=rsid,
+# 		pval=pval
+# 	), access_token=access_token) %>% get_query_content()
+# 	if(class(out) != "response")
+# 	{
+# 		out[[1]] %>% dplyr::select("id", "trait", "name", "ea" = "effect_allele", "nea" = "other_allele", "eaf" = "effect_allele_freq", "beta", "se", "p", "n") %>% dplyr::as_tibble() %>% return()
+# 	} else {
+# 		out %>% return
+# 	}
+# }
