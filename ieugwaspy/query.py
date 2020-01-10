@@ -20,6 +20,7 @@ def api_query(path, query="", access_token=cons.api_token):
         url = '{}{}?query={}&access_token={}'.format(cons.option['mrbaseapi'],path,query,access_token)
     else:
         url = '{}{}?access_token={}'.format(cons.option['mrbaseapi'],path,access_token)
+    print(url)
     response = requests.get(url)
     data = json.loads(response.text)
     return(data)
@@ -52,7 +53,7 @@ def gwasinfo(id = "", access_token = cons.api_token):
         data = api_query('gwasinfo/list', access_token=access_token)
     return(data)
 
-def phewas(variants, pval = 0.00001, access_token = cons.api_token):
+def phewas(variantlist, pval = 1e-3, access_token = cons.api_token):
     '''Perform PheWAS of variant(s)
 
     Parameters:
@@ -64,22 +65,7 @@ def phewas(variants, pval = 0.00001, access_token = cons.api_token):
         data: json object as returned by API
 
     '''
-    rsid = variants_to_rsid(variants)
-    data = api_query('phewas/{}'.format(variants,pval,), access_token=access_token)
+    rsid = ",".join(variants.variants_to_rsid(variantlist))
+    data = api_query('phewas/{}/{}'.format(rsid,pval), access_token=cons.api_token)
     return(data)
 
-
-# phewas <- function(variants, pval = 0.00001, access_token=check_access_token())
-# {
-# 	rsid <- variants_to_rsid(variants)
-# 	out <- api_query("phewas", query=list(
-# 		rsid=rsid,
-# 		pval=pval
-# 	), access_token=access_token) %>% get_query_content()
-# 	if(class(out) != "response")
-# 	{
-# 		out[[1]] %>% dplyr::select("id", "trait", "name", "ea" = "effect_allele", "nea" = "other_allele", "eaf" = "effect_allele_freq", "beta", "se", "p", "n") %>% dplyr::as_tibble() %>% return()
-# 	} else {
-# 		out %>% return
-# 	}
-# }

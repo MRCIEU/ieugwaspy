@@ -7,15 +7,8 @@ def variants_to_rsid(variants):
     variants = list(dict.fromkeys(variants))
     return(variants)
 
+def variants_chrpos(chrpos, radius=0):
+    variantdata = query.api_query('variants/chrpos/{}'.format(chrpos))
+    result = variantdata[0][0]["_id"]
+    return(result)
 
-
-# variants_to_rsid <- function(variants)
-# {
-# 	index <- grep(":", variants)
-# 	if(length(index) > 0)
-# 	{
-# 		o <- variants_chrpos(variants[index])$name
-# 		variants <- c(o, variants[-index]) %>% unique
-# 	}
-# 	return(variants)
-# }
