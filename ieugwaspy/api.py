@@ -1,4 +1,5 @@
 import ieugwaspy.constants as cons
+import webbrowser, os
 def toggle_api(url="prod"):
     '''Toggle API URL (no return value)
 
@@ -8,5 +9,8 @@ def toggle_api(url="prod"):
     '''
     if url in cons.urls.keys():
         cons.option['mrbaseapi'] = cons.urls[url]
-    else:
-        print('A valid API was not selected. No change')
+
+def get_api_token():
+    webbrowser.open(cons.api_token_url)
+    return(input("Paste API token: "))
+    
