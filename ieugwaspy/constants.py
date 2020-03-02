@@ -1,3 +1,11 @@
+'''This defines constants ieugwaspy
+
+Parameters:
+    option: API url selected
+    urls: API urls available
+    api_token_url: URL for API OAuth
+    api_token: API token (default is NULL)
+'''
 option = {
     'mrbaseapi': 'http://gwasapi.mrcieu.ac.uk/'
 }

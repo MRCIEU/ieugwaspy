@@ -1,3 +1,5 @@
+'''Backwards compatibility for old IDs
+'''
 def legacy_ids(study_ids): 
     '''Handle legacy study IDs, returning the new format
 

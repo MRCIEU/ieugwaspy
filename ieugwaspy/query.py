@@ -1,10 +1,12 @@
+'''API query functions
+'''
 import ieugwaspy.constants as cons
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
 import json, requests, os
 
 def api_query(path, query="", method="GET", access_token=cons.api_token):
-    '''Query the API and return the data
+    '''This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
     Parameters:
         path: the path component of the URL
@@ -43,10 +45,10 @@ def api_status():
     return(data)
 
 def gwasinfo(id = "", access_token = cons.api_token):
-    '''Return GWAS study meta-data
+    '''This function will return GWAS study meta-data describing the specific studies selected by id
 
     Parameters:
-        id: ID(s) of specific studies
+        id: ID(s) of specific studies (Python list)
         access_token: the OAuth access token
 
     Returns:
@@ -64,8 +66,8 @@ def associations(variantlist, id, proxies=1, r2=0.8, align_alleles=1, palindrome
     '''Retrieve associations for specific SNP/study combinations
 
     Parameters:
-        variantlist: list of variants
-        id: list of study IDs
+        variantlist: list of variants (Python list)
+        id: list of study IDs (Python list)
         proxies: proxies 0 or (default) 1 - indicating whether to look for proxies
         r2: minimum proxy LD rsq value. Default=0.8
         align_alleles: try to align tag alleles to target alleles (if proxies = 1). 1 = yes (default), 0 = no
@@ -92,10 +94,10 @@ def associations(variantlist, id, proxies=1, r2=0.8, align_alleles=1, palindrome
     return(result)
 
 def phewas(variantlist, pval = 1e-3, access_token = cons.api_token):
-    '''Perform PheWAS of variant(s)
+    '''Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database
 
     Parameters:
-        variants: list of variants
+        variants: list of variants (Python list)
         pval: p-value threshold
         access_token: the OAuth access token
 
@@ -108,10 +110,10 @@ def phewas(variantlist, pval = 1e-3, access_token = cons.api_token):
     return(data)
 
 def tophits(id, pval=5e-8, clump = 1, r2 = 0.001, kb = 10000, force_server = False, access_token=cons.api_token):
-    '''Retrieve associations for specific SNP/study combinations
+    '''Retrieve association data for specific SNP/study combinations 
 
     Parameters:
-        id: list of study IDs
+        id: list of study IDs (Python list)
         pval: use this p-value threshold. Default = 5e-8
         clump: whether to clump (1) or not (0). Default = 1
         r2: use this clumping r2 threshold. Default is very strict, 0.001
