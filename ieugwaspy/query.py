@@ -65,7 +65,7 @@ def gwasinfo(id="", access_token=cons.api_token):
     if id != "":
         data = api_query("gwasinfo/{}".format(id), access_token=access_token)
     else:
-        data = api_query("gwasinfo/list", access_token=access_token)
+        data = api_query("gwasinfo", access_token=access_token)
     return data
 
 
