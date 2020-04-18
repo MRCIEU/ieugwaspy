@@ -1,9 +1,10 @@
-'''SNP/variant helper functions
-'''
+"""SNP/variant helper functions
+"""
 import ieugwaspy.query as query
 
+
 def variants_to_rsid(variants):
-    '''This function returns dbSNP rsid for variants provided in chr:pos format, calling the variants_chrpos function for each variant 
+    """This function returns dbSNP rsid for variants provided in chr:pos format, calling the variants_chrpos function for each variant 
 
     Parameters:
         variants: list of variants in chr:pos format (Python list) (leaves rsids unchanged)
@@ -11,15 +12,16 @@ def variants_to_rsid(variants):
     Returns:
         data: list of variant rsids (Python list)
 
-    '''
+    """
     for pos, variant in enumerate(variants):
         if variant.find(":") > 0:
             variants[pos] = variants_chrpos(variant)
     variants = list(dict.fromkeys(variants))
-    return(variants)
+    return variants
+
 
 def variants_chrpos(chrpos, radius=0):
-    '''This function returns the dbSNP rsid for a single variant in chr:pos format
+    """This function returns the dbSNP rsid for a single variant in chr:pos format
 
     Parameters:
         chrpos: variant in chr:pos format (string)
@@ -27,8 +29,7 @@ def variants_chrpos(chrpos, radius=0):
     Returns:
         data: variant rsid (string)
 
-    '''
-    variantdata = query.api_query('variants/chrpos/{}'.format(chrpos))
+    """
+    variantdata = query.api_query("variants/chrpos/{}".format(chrpos))
     result = variantdata[0][0]["_id"]
-    return(result)
-
+    return result
