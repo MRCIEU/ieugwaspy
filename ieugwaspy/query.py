@@ -29,7 +29,6 @@ def api_query(path, query="", method="GET", access_token=cons.api_token):
             url = "{}{}?access_token={}".format(
                 cons.option["mrbaseapi"], path, access_token
             )
-        print(url)
         response = requests.get(url)
     elif method == "POST":
         url = "{}{}".format(cons.option["mrbaseapi"], path)
