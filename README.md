@@ -1,5 +1,7 @@
 # Perform fast queries in Python against a massive database of complete GWAS summary data
 
+[![Actions Status](https://xxx.execute-api.us-west-2.amazonaws.com/production/badge/MRCIEU/ieugwaspy)](https://xxx.execute-api.us-west-2.amazonaws.com/production/results/MRCIEU/ieugwaspy)
+
 The [IEU GWAS database](https://gwas.mrcieu.ac.uk/) comprises over 10,000 curated, QC'd and harmonised complete GWAS summary datasets and can be queried using an API. See [here](http://gwasapi.mrcieu.ac.uk/docs/) for documentation on the API itself. This Python package package is a wrapper to make generic calls to the API, plus convenience functions for specific queries.
 
 Methods to be implemented:
