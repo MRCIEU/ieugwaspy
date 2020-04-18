@@ -1,6 +1,5 @@
 """SNP/variant helper functions
 """
-import ieugwaspy.query as query
 
 
 def variants_to_rsid(variants):
@@ -30,6 +29,8 @@ def variants_chrpos(chrpos, radius=0):
         data: variant rsid (string)
 
     """
+    import ieugwaspy.query as query
+
     variantdata = query.api_query("variants/chrpos/{}".format(chrpos))
     result = variantdata[0][0]["_id"]
     return result
