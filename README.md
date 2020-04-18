@@ -4,7 +4,7 @@
 
 The [IEU GWAS database](https://gwas.mrcieu.ac.uk/) comprises over 10,000 curated, QC'd and harmonised complete GWAS summary datasets and can be queried using an API. See [here](http://gwasapi.mrcieu.ac.uk/docs/) for documentation on the API itself. This Python package package is a wrapper to make generic calls to the API, plus convenience functions for specific queries.
 
-[See ieugwaspy documentation](https://mrcieu.github.io/ieugwaspy/docs/) for details of how to use this package.
+[See ieugwaspy documentation](https://mrcieu.github.io/ieugwaspy/) for details of how to use this package.
 
 ### Features:
 
