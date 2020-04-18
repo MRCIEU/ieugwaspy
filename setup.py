@@ -10,7 +10,7 @@ setuptools.setup(
     description="Python interface to IEU GWAS database API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/MRCIEU/ieugwaspy",
+    url="https://mrcieu.github.io/ieugwaspy/",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
