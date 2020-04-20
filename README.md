@@ -6,6 +6,10 @@ The [IEU GWAS database](https://gwas.mrcieu.ac.uk/) comprises over 10,000 curate
 
 [See ieugwaspy documentation](https://mrcieu.github.io/ieugwaspy/) for details of how to use this package.
 
+### Installation:
+
+Install using ```pip install ieugwaspy```
+
 ### Features:
 
 - Get meta data about specific or all studies
