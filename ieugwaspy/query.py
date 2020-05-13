@@ -1,11 +1,21 @@
 """API query functions
 """
+import json
+import os
+import requests
+
+from retry import retry
+from urllib.parse import urljoin
+
 import ieugwaspy.constants as cons
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
-import json, requests, os
 
+MAX_TRIES = 10
+TRIES_DELAY = 2  # 2 seconds
+TRIES_BACKOFF = 2
 
+@retry(tries=MAX_TRIES, delay=TRIES_DELAY, backoff=TRIES_BACKOFF)
 def api_query(path, query="", method="GET", access_token=cons.api_token):
     """This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
@@ -17,26 +27,20 @@ def api_query(path, query="", method="GET", access_token=cons.api_token):
     Returns:
         data: json object as returned by API
 
-    """  # Still need to handle timeouts
-    ntry = 0
-    ntries = 3
+    """
+    url = urljoin(cons.option["mrbaseapi"], path)
+    
     if method == "GET":
+        playload = {"access_token": access_token}
         if query != "":
-            url = "{}{}?query={}&access_token={}".format(
-                cons.option["mrbaseapi"], path, query, access_token
-            )
-        else:
-            url = "{}{}?access_token={}".format(
-                cons.option["mrbaseapi"], path, access_token
-            )
-        response = requests.get(url)
+            playload['query'] = query
+
+        response = requests.get(url, params=playload)
     elif method == "POST":
-        url = "{}{}".format(cons.option["mrbaseapi"], path)
         response = requests.post(url, data=query)
     else:
         return "Invalid API method"
-    data = json.loads(response.text)
-    return data
+    return response.json()
 
 
 def api_status():
