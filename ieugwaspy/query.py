@@ -31,11 +31,11 @@ def api_query(path, query="", method="GET", access_token=cons.api_token):
     url = urljoin(cons.option["mrbaseapi"], path)
     
     if method == "GET":
-        playload = {"access_token": access_token}
+        payload = {"access_token": access_token}
         if query != "":
-            playload['query'] = query
+            payload['query'] = query
 
-        response = requests.get(url, params=playload)
+        response = requests.get(url, params=payload)
     elif method == "POST":
         response = requests.post(url, data=query)
     else:
