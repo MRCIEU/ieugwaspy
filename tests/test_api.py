@@ -29,7 +29,7 @@ def test_gwasinfo():
 
 
 def test_phewas():
-    data = ieugwaspy.phewas(["rs53576"])
+    data = ieugwaspy.phewas(["rs53576"], batch="ukb-a")
     assert len(data) > 0
     assert len(data[0]) > 0
     assert 0.0 <= data[0]["p"] <= 1.0
