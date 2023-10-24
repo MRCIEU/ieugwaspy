@@ -31,7 +31,7 @@ def api_query(path, query="", method="GET", access_token=cons.api_token):
     url = urljoin(cons.option["mrbaseapi"], path)
     
     if method == "GET":
-        payload = {"access_token": access_token}
+        payload = {"X-Api-Token": access_token}
         if query != "":
             payload['query'] = query
 
@@ -108,26 +108,33 @@ def associations(
         "align_alleles": align_alleles,
         "palindromes": palindromes,
         "maf_threshold": maf_threshold,
-        "access_token": access_token,
+        "X-Api-Token": access_token,
     }
     result = api_query("associations", query=data, method="POST")
     return result
 
 
-def phewas(variantlist, pval=1e-3, access_token=cons.api_token):
+def phewas(variantlist, pval=1e-3, access_token=cons.api_token, batch=[]):
     """Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database
 
     Parameters:
         variants: list of variants (Python list)
         pval: p-value threshold
         access_token: the OAuth access token
+        batch: OpenGWAS databatch (e.g. ieu-a)
 
     Returns:
         data: json object as returned by API
 
     """
     rsid = ",".join(variants.variants_to_rsid(variantlist))
-    data = api_query("phewas/{}/{}".format(rsid, pval), access_token=access_token)
+    data = {
+        "variant": rsid,
+        "pval": pval,
+        "X-Api-Token": access_token,
+        "index_list": batch
+    }
+    data = api_query("phewas", query = data, method="POST")
     return data
 
 
@@ -169,7 +176,7 @@ def tophits(
         "clump": clump,
         "r2": r2,
         "kb": kb,
-        "access_token": access_token,
+        "X-Api-Token": access_token,
     }
     result = api_query("tophits", query=data, method="POST")
     return result
