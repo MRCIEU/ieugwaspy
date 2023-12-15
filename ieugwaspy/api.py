@@ -4,7 +4,7 @@ import ieugwaspy.constants as cons
 import webbrowser, os
 
 
-def toggle_api(url="prod"):
+def toggle_api(url="public"):
     """Toggle API URL (no return value)
 
     Parameters:

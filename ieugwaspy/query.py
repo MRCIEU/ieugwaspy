@@ -141,9 +141,12 @@ def phewas(variantlist, pval=1e-3, access_token=cons.api_token, batch=[]):
 def tophits(
     id,
     pval=5e-8,
+    preclumped=1,
     clump=1,
+    bychr=0,
     r2=0.001,
     kb=10000,
+    pop="EUR",
     force_server=False,
     access_token=cons.api_token,
 ):
@@ -152,9 +155,12 @@ def tophits(
     Parameters:
         id: list of study IDs (Python list)
         pval: use this p-value threshold. Default = 5e-8
+        preclumped: Whether to use pre-clumped hits
         clump: whether to clump (1) or not (0). Default = 1
+        bychr: Whether to extract by chromosome (1) or all at once (0, default). There is a limit on query results so bychr might be required for some well-powered datasets
         r2: use this clumping r2 threshold. Default is very strict, 0.001
         kb: use this clumping kb window. Default is very strict, 10000
+        pop: population. Available values : EUR, SAS, EAS, AFR, AMR, legacy. Default: EUR
         force_server: True/False. By default (False) will return preclumped hits. p-value threshold 5e-8, with r2 threshold 0.001 and kb threshold 10000, using only SNPs with MAF > 0.01 in the European samples in 1000 genomes. If force_server = TRUE then will recompute using server side LD reference panel.
         access_token: the OAuth access token
 
@@ -174,8 +180,10 @@ def tophits(
         "pval": pval,
         "preclumped": preclumped,
         "clump": clump,
+        "bychr": bychr,
         "r2": r2,
         "kb": kb,
+        "pop": pop,
         "X-Api-Token": access_token,
     }
     result = api_query("tophits", query=data, method="POST")
