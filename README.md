@@ -21,4 +21,5 @@ Install using ```pip install ieugwaspy```
 
 #### Developer notes
 To run tests, use `pytest -v -s --select-api="dev"`
+
 To generate docs, use `pdoc --html ieugwaspy; rm -rf docs/; mkdir docs; mv html/ieugwaspy/* docs/; rm -r html/`

@@ -54,6 +54,16 @@ def status():
     return _api_query("status")
 
 
+def user():
+    """Get user information
+
+    Returns:
+        result: JSON object as returned by API
+
+    """
+    return _api_query("user")
+
+
 def gwasinfo(id=[]):
     """This function will return GWAS study meta-data describing the specific studies selected by id
 

@@ -5,6 +5,11 @@ def test_apistatus(ieugwaspy_instance):
     assert data["API version"]
 
 
+def test_user(ieugwaspy_instance):
+    data = ieugwaspy_instance.user()
+    assert "uid" in data["user"]
+
+
 def test_variants_to_rsid(ieugwaspy_instance):
     data = ieugwaspy_instance.variants_to_rsid(["rs1234", "10:44865737"])
     assert set(data) == {"rs1234", "rs7777"}
