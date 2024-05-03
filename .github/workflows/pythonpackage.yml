@@ -41,7 +41,7 @@ jobs:
         python setup.py install
     - name: Create and populate .ieugwaspy.json file
       run: |
-        echo '{"jwt":"$OPENGWAS_X_TEST_MODE_KEY"}' > .ieugwaspy.json
+        echo '{"test_mode_key":"$OPENGWAS_X_TEST_MODE_KEY"}' > .ieugwaspy.json
     - name: Test with pytest
       run: |
         pip install pytest
