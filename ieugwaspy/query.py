@@ -1,179 +1,165 @@
 """API query functions
 """
-import json
-import os
 import requests
 
 from retry import retry
 from urllib.parse import urljoin
 
-import ieugwaspy.constants as cons
+import ieugwaspy.config as config
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
 
-MAX_TRIES = 10
-TRIES_DELAY = 2  # 2 seconds
-TRIES_BACKOFF = 2
 
-@retry(tries=MAX_TRIES, delay=TRIES_DELAY, backoff=TRIES_BACKOFF)
-def api_query(path, query="", method="GET", access_token=cons.api_token):
+@retry(tries=5, delay=2, backoff=2)
+def _api_query(path, method="GET", data=[]):
     """This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
-    Parameters:
+    Args:
         path: the path component of the URL
-        query: any query to go after the ?query component of the URL
-        access_token: the OAuth access token
+        method: the HTTP method
+        data: the form data
 
     Returns:
-        data: json object as returned by API
+        data: JSON object as returned by API
 
     """
-    url = urljoin(cons.option["mrbaseapi"], path)
-    
+    url = urljoin(config.env["base_url"], path)
+
+    headers = {}
+    if config.env["jwt"]:
+        headers["Authorization"] = "Bearer " + config.env["jwt"]
+    if config.env["test_mode_key"]:
+        headers["X-TEST-MODE-KEY"] = config.env["test_mode_key"]
+
     if method == "GET":
-        payload = {"X-Api-Token": access_token}
-        if query != "":
-            payload['query'] = query
-
-        response = requests.get(url, params=payload)
+        response = requests.get(url, headers=headers)
     elif method == "POST":
-        response = requests.post(url, data=query)
+        response = requests.post(url, headers=headers, data=data)
     else:
-        return "Invalid API method"
-    return response.json()
+        raise Exception("Invalid API method")
+
+    try:
+        return response.json()
+    except Exception as e:
+        raise Exception("Unable to parse the response. " + str(e))
 
 
-def api_status():
+def status():
     """Check API status
 
     Returns:
-        data: API status 
+        result: JSON object as returned by API
 
     """
-    data = api_query("status")
-    return data
+    return _api_query("status")
 
 
-def gwasinfo(id="", access_token=cons.api_token):
+def gwasinfo(id=[]):
     """This function will return GWAS study meta-data describing the specific studies selected by id
 
-    Parameters:
-        id: ID(s) of specific studies (Python list)
-        access_token: the OAuth access token
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. ["ieu-a-1239", "ieu-a-2"]
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     """
-    id = ",".join(id)
-    if id != "":
-        data = api_query("gwasinfo/{}".format(id), access_token=access_token)
+    if id != []:
+        return _api_query("gwasinfo/{}".format(",".join(id)))
     else:
-        data = api_query("gwasinfo", access_token=access_token)
-    return data
+        return _api_query("gwasinfo")
 
 
 def associations(
-    variantlist,
-    id,
-    proxies=1,
-    r2=0.8,
-    align_alleles=1,
-    palindromes=1,
-    maf_threshold=0.3,
-    access_token=cons.api_token,
+        variant,
+        id,
+        proxies=1,
+        r2=0.8,
+        align_alleles=1,
+        palindromes=1,
+        maf_threshold=0.3
 ):
     """Retrieve associations for specific SNP/study combinations
 
-    Parameters:
-        variantlist: list of variants (Python list)
-        id: list of study IDs (Python list)
-        proxies: proxies 0 or (default) 1 - indicating whether to look for proxies
-        r2: minimum proxy LD rsq value. Default=0.8
-        align_alleles: try to align tag alleles to target alleles (if proxies = 1). 1 = yes (default), 0 = no
-        palindromes: allow palindromic SNPs (if proxies = 1). 1 = yes (default), 0 = no
-        maf_threshold: MAF threshold to try to infer palindromic SNPs. Default = 0.3.
-        access_token: the OAuth access token
+    Args:
+        variant (list): list of variants, e.g. ["rs1205", "7:105561135", "7:105561135-105563135"]
+        id (list): list of OpenGWAS IDs, e.g. ["ieu-a-1239", "ieu-a-2"]
+        proxies (int): `1` or `0`, whether to look for proxies (1, default) or not (0)
+        r2 (float): minimum proxy LD rsq value. Default = 0.8
+        align_alleles (int): `1` or `0`, whether to try to align tag alleles to target alleles (1, default) or not (0). Only active when proxies = 1
+        palindromes (int): `1` or `0`, whether to allow palindromic SNPs (1, default) or not (0). Only active when proxies = 1
+        maf_threshold (float): MAF threshold to try to infer palindromic SNPs. Default = 0.3
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     """
     id = backwards.legacy_ids(id)
     data = {
-        "variant": variantlist,
+        "variant": variant,
         "id": id,
         "proxies": proxies,
         "r2": r2,
         "align_alleles": align_alleles,
         "palindromes": palindromes,
-        "maf_threshold": maf_threshold,
-        "X-Api-Token": access_token,
+        "maf_threshold": maf_threshold
     }
-    result = api_query("associations", query=data, method="POST")
-    return result
+    return _api_query("associations", method="POST", data=data)
 
 
-def phewas(variantlist, pval=1e-3, access_token=cons.api_token, batch=[]):
+def phewas(variant, pval=1e-3, batch=[]):
     """Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database
 
-    Parameters:
-        variants: list of variants (Python list)
-        pval: p-value threshold
-        access_token: the OAuth access token
-        batch: OpenGWAS databatch (e.g. ieu-a)
+    Args:
+        variant (list): list of variants, e.g. ["rs1205", "7:105561135", "7:105561135-105563135"]
+        pval (float): p-value threshold
+        batch (list): OpenGWAS data batches, e.g. ["ieu-a"]. Leave empty to search across all batches
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     """
-    rsid = ",".join(variants.variants_to_rsid(variantlist))
+    rsid = ",".join(variants.variants_to_rsid(variant))
     data = {
         "variant": rsid,
         "pval": pval,
-        "X-Api-Token": access_token,
         "index_list": batch
     }
-    data = api_query("phewas", query = data, method="POST")
-    return data
+    return _api_query("phewas", method="POST", data=data)
 
 
 def tophits(
-    id,
-    pval=5e-8,
-    preclumped=1,
-    clump=1,
-    bychr=0,
-    r2=0.001,
-    kb=10000,
-    pop="EUR",
-    force_server=False,
-    access_token=cons.api_token,
+        id,
+        pval=5e-8,
+        preclumped=1,
+        clump=1,
+        bychr=0,
+        r2=0.001,
+        kb=10000,
+        pop="EUR",
+        force_server=False
 ):
     """Retrieve association data for specific SNP/study combinations 
 
-    Parameters:
-        id: list of study IDs (Python list)
-        pval: use this p-value threshold. Default = 5e-8
-        preclumped: Whether to use pre-clumped hits
-        clump: whether to clump (1) or not (0). Default = 1
-        bychr: Whether to extract by chromosome (1) or all at once (0, default). There is a limit on query results so bychr might be required for some well-powered datasets
-        r2: use this clumping r2 threshold. Default is very strict, 0.001
-        kb: use this clumping kb window. Default is very strict, 10000
-        pop: population. Available values : EUR, SAS, EAS, AFR, AMR, legacy. Default: EUR
-        force_server: True/False. By default (False) will return preclumped hits. p-value threshold 5e-8, with r2 threshold 0.001 and kb threshold 10000, using only SNPs with MAF > 0.01 in the European samples in 1000 genomes. If force_server = TRUE then will recompute using server side LD reference panel.
-        access_token: the OAuth access token
+    Args:
+        id (list): list of OpenGWAS IDs, e.g. ["ieu-a-1239", "ieu-a-2"]
+        pval (float): use this p-value threshold. Default = 5e-8
+        preclumped (int): `1` or `0`, whether to use pre-clumped hits (1, default) or not (0)
+        clump (int): `1` or `0`, whether to clump (1, default) or not (0)
+        bychr (int): `0` or `1`, whether to extract all at once (0, default) or by chromosome (1). There is a limit on query results so bychr might be required for some well-powered datasets
+        r2 (float): use this clumping r2 threshold. Default = 0.001 (very strict)
+        kb (int): use this clumping kb window. Default = 10000 (very strict)
+        pop (str): `EUR`, `SAS`, `EAS`, `AFR`, `AMR` or `legacy`, indicating the population. Default = EUR
+        force_server (bool): `True` or `False`. By False (default) it will return preclumped hits with pval = 5e-8, r2 = 0.001 and kb = 10000 and using only SNPs with MAF > 0.01 in the European (EUR) samples in 1000 genomes. If TRUE then it will recompute using server side LD reference panel
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     """
     id = backwards.legacy_ids(id)
-    if clump == 1 and r2 == 0.001 and kb == 10000 and pval == 5e-8:
-        preclumped = 1
+    if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
+        preclumped = 0 if force_server else 1
     else:
-        preclumped = 0
-    if preclumped == 1 and force_server:
         preclumped = 0
     data = {
         "id": id,
@@ -183,8 +169,6 @@ def tophits(
         "bychr": bychr,
         "r2": r2,
         "kb": kb,
-        "pop": pop,
-        "X-Api-Token": access_token,
+        "pop": pop
     }
-    result = api_query("tophits", query=data, method="POST")
-    return result
+    return _api_query("tophits", method="POST", data=data)

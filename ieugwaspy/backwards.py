@@ -5,7 +5,7 @@
 def legacy_ids(study_ids):
     """Handle legacy study IDs, returning the new format
 
-    Parameters:
+    Args:
         study_ids: List of study IDs (new or old)
 
     Returns:

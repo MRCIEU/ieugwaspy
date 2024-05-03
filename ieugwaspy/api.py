@@ -1,20 +1,26 @@
 """API management
 """
-import ieugwaspy.constants as cons
-import webbrowser, os
+import ieugwaspy.config as config
+import webbrowser
 
 
-def toggle_api(url="public"):
-    """Toggle API URL (no return value)
+def select_api(key="public"):
+    """Select API base URL (no return value)
 
-    Parameters:
-        url: the short name for the required API url
+    Args:
+        key: the short name for the required API base url
 
     """
-    if url in cons.urls.keys():
-        cons.option["mrbaseapi"] = cons.urls[url]
+    if key in config.urls.keys():
+        config.env["base_url"] = config.urls[key]
+        print("API server is now: " + config.env["base_url"])
+    else:
+        print("Please select one from the following: \n" + "\n".join([k + " - " + v for k, v in config.urls.items()]))
 
 
-def get_api_token():
-    webbrowser.open(cons.api_token_url)
-    return input("Paste API token: ")
+def get_jwt():
+    """Obtain a token (JWT) and save it locally
+    """
+    webbrowser.open(config.url_obtain_jwt)
+    config.env["jwt"] = input("Paste your token (JWT) like ey****.******.******:\n")
+    config._save_env()
