@@ -29,6 +29,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install pytest
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -42,7 +43,8 @@ jobs:
     - name: Create and populate .ieugwaspy.json file
       run: |
         echo '{"test_mode_key":"$OPENGWAS_X_TEST_MODE_KEY"}' > .ieugwaspy.json
+        ls -l
+        cat .ieugwaspy.json
     - name: Test with pytest
       run: |
-        pip install pytest
-        pytest
+        pytest -v -s
