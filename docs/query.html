@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.2" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>ieugwaspy.query API documentation</title>
 <meta name="description" content="API query functions" />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -27,176 +29,178 @@
 </summary>
 <pre><code class="python">&#34;&#34;&#34;API query functions
 &#34;&#34;&#34;
-import ieugwaspy.constants as cons
+import requests
+
+from retry import retry
+from urllib.parse import urljoin
+
+import ieugwaspy.config as config
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
-import json, requests, os
 
 
-def api_query(path, query=&#34;&#34;, method=&#34;GET&#34;, access_token=cons.api_token):
+@retry(tries=5, delay=2, backoff=2)
+def _api_query(path, method=&#34;GET&#34;, data=[]):
     &#34;&#34;&#34;This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
-    Parameters:
+    Args:
         path: the path component of the URL
-        query: any query to go after the ?query component of the URL
-        access_token: the OAuth access token
+        method: the HTTP method
+        data: the form data
 
     Returns:
-        data: json object as returned by API
+        data: JSON object as returned by API
 
-    &#34;&#34;&#34;  # Still need to handle timeouts
-    ntry = 0
-    ntries = 3
+    &#34;&#34;&#34;
+    url = urljoin(config.env[&#34;base_url&#34;], path)
+
+    headers = {}
+    if config.env[&#34;jwt&#34;]:
+        headers[&#34;Authorization&#34;] = &#34;Bearer &#34; + config.env[&#34;jwt&#34;]
+    if config.env[&#34;test_mode_key&#34;]:
+        headers[&#34;X-TEST-MODE-KEY&#34;] = config.env[&#34;test_mode_key&#34;]
+
     if method == &#34;GET&#34;:
-        if query != &#34;&#34;:
-            url = &#34;{}{}?query={}&amp;access_token={}&#34;.format(
-                cons.option[&#34;mrbaseapi&#34;], path, query, access_token
-            )
-        else:
-            url = &#34;{}{}?access_token={}&#34;.format(
-                cons.option[&#34;mrbaseapi&#34;], path, access_token
-            )
-        print(url)
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
     elif method == &#34;POST&#34;:
-        url = &#34;{}{}&#34;.format(cons.option[&#34;mrbaseapi&#34;], path)
-        response = requests.post(url, data=query)
+        response = requests.post(url, headers=headers, data=data)
     else:
-        return &#34;Invalid API method&#34;
-    data = json.loads(response.text)
-    return data
+        raise Exception(&#34;Invalid API method&#34;)
+
+    try:
+        return response.json()
+    except Exception as e:
+        raise Exception(&#34;Unable to parse the response. &#34; + str(e))
 
 
-def api_status():
+def status():
     &#34;&#34;&#34;Check API status
 
     Returns:
-        data: API status 
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    data = api_query(&#34;status&#34;)
-    return data
+    return _api_query(&#34;status&#34;)
 
 
-def gwasinfo(id=&#34;&#34;, access_token=cons.api_token):
+def gwasinfo(id=[]):
     &#34;&#34;&#34;This function will return GWAS study meta-data describing the specific studies selected by id
 
-    Parameters:
-        id: ID(s) of specific studies (Python list)
-        access_token: the OAuth access token
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = &#34;,&#34;.join(id)
-    if id != &#34;&#34;:
-        data = api_query(&#34;gwasinfo/{}&#34;.format(id), access_token=access_token)
+    if id != []:
+        return _api_query(&#34;gwasinfo/{}&#34;.format(&#34;,&#34;.join(id)))
     else:
-        data = api_query(&#34;gwasinfo/list&#34;, access_token=access_token)
-    return data
+        return _api_query(&#34;gwasinfo&#34;)
 
 
 def associations(
-    variantlist,
-    id,
-    proxies=1,
-    r2=0.8,
-    align_alleles=1,
-    palindromes=1,
-    maf_threshold=0.3,
-    access_token=cons.api_token,
+        variant,
+        id,
+        proxies=1,
+        r2=0.8,
+        align_alleles=1,
+        palindromes=1,
+        maf_threshold=0.3
 ):
     &#34;&#34;&#34;Retrieve associations for specific SNP/study combinations
 
-    Parameters:
-        variantlist: list of variants (Python list)
-        id: list of study IDs (Python list)
-        proxies: proxies 0 or (default) 1 - indicating whether to look for proxies
-        r2: minimum proxy LD rsq value. Default=0.8
-        align_alleles: try to align tag alleles to target alleles (if proxies = 1). 1 = yes (default), 0 = no
-        palindromes: allow palindromic SNPs (if proxies = 1). 1 = yes (default), 0 = no
-        maf_threshold: MAF threshold to try to infer palindromic SNPs. Default = 0.3.
-        access_token: the OAuth access token
+    Args:
+        variant (list): list of variants, e.g. [&#34;rs1205&#34;, &#34;7:105561135&#34;, &#34;7:105561135-105563135&#34;]
+        id (list): list of OpenGWAS IDs, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+        proxies (int): `1` or `0`, whether to look for proxies (1, default) or not (0)
+        r2 (float): minimum proxy LD rsq value. Default = 0.8
+        align_alleles (int): `1` or `0`, whether to try to align tag alleles to target alleles (1, default) or not (0). Only active when proxies = 1
+        palindromes (int): `1` or `0`, whether to allow palindromic SNPs (1, default) or not (0). Only active when proxies = 1
+        maf_threshold (float): MAF threshold to try to infer palindromic SNPs. Default = 0.3
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
     id = backwards.legacy_ids(id)
     data = {
-        &#34;variant&#34;: variantlist,
+        &#34;variant&#34;: variant,
         &#34;id&#34;: id,
         &#34;proxies&#34;: proxies,
         &#34;r2&#34;: r2,
         &#34;align_alleles&#34;: align_alleles,
         &#34;palindromes&#34;: palindromes,
-        &#34;maf_threshold&#34;: maf_threshold,
-        &#34;access_token&#34;: access_token,
+        &#34;maf_threshold&#34;: maf_threshold
     }
-    result = api_query(&#34;associations&#34;, query=data, method=&#34;POST&#34;)
-    return result
+    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data=data)
 
 
-def phewas(variantlist, pval=1e-3, access_token=cons.api_token):
+def phewas(variant, pval=1e-3, batch=[]):
     &#34;&#34;&#34;Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database
 
-    Parameters:
-        variants: list of variants (Python list)
-        pval: p-value threshold
-        access_token: the OAuth access token
+    Args:
+        variant (list): list of variants, e.g. [&#34;rs1205&#34;, &#34;7:105561135&#34;, &#34;7:105561135-105563135&#34;]
+        pval (float): p-value threshold
+        batch (list): OpenGWAS data batches, e.g. [&#34;ieu-a&#34;]. Leave empty to search across all batches
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    rsid = &#34;,&#34;.join(variants.variants_to_rsid(variantlist))
-    data = api_query(&#34;phewas/{}/{}&#34;.format(rsid, pval), access_token=access_token)
-    return data
+    rsid = &#34;,&#34;.join(variants.variants_to_rsid(variant))
+    data = {
+        &#34;variant&#34;: rsid,
+        &#34;pval&#34;: pval,
+        &#34;index_list&#34;: batch
+    }
+    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data=data)
 
 
 def tophits(
-    id,
-    pval=5e-8,
-    clump=1,
-    r2=0.001,
-    kb=10000,
-    force_server=False,
-    access_token=cons.api_token,
+        id,
+        pval=5e-8,
+        preclumped=1,
+        clump=1,
+        bychr=0,
+        r2=0.001,
+        kb=10000,
+        pop=&#34;EUR&#34;,
+        force_server=False
 ):
     &#34;&#34;&#34;Retrieve association data for specific SNP/study combinations 
 
-    Parameters:
-        id: list of study IDs (Python list)
-        pval: use this p-value threshold. Default = 5e-8
-        clump: whether to clump (1) or not (0). Default = 1
-        r2: use this clumping r2 threshold. Default is very strict, 0.001
-        kb: use this clumping kb window. Default is very strict, 10000
-        force_server: True/False. By default (False) will return preclumped hits. p-value threshold 5e-8, with r2 threshold 0.001 and kb threshold 10000, using only SNPs with MAF &gt; 0.01 in the European samples in 1000 genomes. If force_server = TRUE then will recompute using server side LD reference panel.
-        access_token: the OAuth access token
+    Args:
+        id (list): list of OpenGWAS IDs, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+        pval (float): use this p-value threshold. Default = 5e-8
+        preclumped (int): `1` or `0`, whether to use pre-clumped hits (1, default) or not (0)
+        clump (int): `1` or `0`, whether to clump (1, default) or not (0)
+        bychr (int): `0` or `1`, whether to extract all at once (0, default) or by chromosome (1). There is a limit on query results so bychr might be required for some well-powered datasets
+        r2 (float): use this clumping r2 threshold. Default = 0.001 (very strict)
+        kb (int): use this clumping kb window. Default = 10000 (very strict)
+        pop (str): `EUR`, `SAS`, `EAS`, `AFR`, `AMR` or `legacy`, indicating the population. Default = EUR
+        force_server (bool): `True` or `False`. By False (default) it will return preclumped hits with pval = 5e-8, r2 = 0.001 and kb = 10000 and using only SNPs with MAF &gt; 0.01 in the European (EUR) samples in 1000 genomes. If TRUE then it will recompute using server side LD reference panel
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
     id = backwards.legacy_ids(id)
-    if clump == 1 and r2 == 0.001 and kb == 10000 and pval == 5e-8:
-        preclumped = 1
+    if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
+        preclumped = 0 if force_server else 1
     else:
-        preclumped = 0
-    if preclumped == 1 and force_server:
         preclumped = 0
     data = {
         &#34;id&#34;: id,
         &#34;pval&#34;: pval,
         &#34;preclumped&#34;: preclumped,
         &#34;clump&#34;: clump,
+        &#34;bychr&#34;: bychr,
         &#34;r2&#34;: r2,
         &#34;kb&#34;: kb,
-        &#34;access_token&#34;: access_token,
+        &#34;pop&#34;: pop
     }
-    result = api_query(&#34;tophits&#34;, query=data, method=&#34;POST&#34;)
-    return result</code></pre>
+    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data=data)</code></pre>
 </details>
 </section>
 <section>
@@ -206,316 +210,256 @@ def tophits(
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="ieugwaspy.query.api_query"><code class="name flex">
-<span>def <span class="ident">api_query</span></span>(<span>path, query='', method='GET', access_token='NULL')</span>
-</code></dt>
-<dd>
-<section class="desc"><p>This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.
-</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>path</code></strong></dt>
-<dd>the path component of the URL</dd>
-<dt><strong><code>query</code></strong></dt>
-<dd>any query to go after the ?query component of the URL</dd>
-<dt><strong><code>access_token</code></strong></dt>
-<dd>the OAuth access token</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>json object as returned by API</dd>
-</dl></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def api_query(path, query=&#34;&#34;, method=&#34;GET&#34;, access_token=cons.api_token):
-    &#34;&#34;&#34;This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
-
-    Parameters:
-        path: the path component of the URL
-        query: any query to go after the ?query component of the URL
-        access_token: the OAuth access token
-
-    Returns:
-        data: json object as returned by API
-
-    &#34;&#34;&#34;  # Still need to handle timeouts
-    ntry = 0
-    ntries = 3
-    if method == &#34;GET&#34;:
-        if query != &#34;&#34;:
-            url = &#34;{}{}?query={}&amp;access_token={}&#34;.format(
-                cons.option[&#34;mrbaseapi&#34;], path, query, access_token
-            )
-        else:
-            url = &#34;{}{}?access_token={}&#34;.format(
-                cons.option[&#34;mrbaseapi&#34;], path, access_token
-            )
-        print(url)
-        response = requests.get(url)
-    elif method == &#34;POST&#34;:
-        url = &#34;{}{}&#34;.format(cons.option[&#34;mrbaseapi&#34;], path)
-        response = requests.post(url, data=query)
-    else:
-        return &#34;Invalid API method&#34;
-    data = json.loads(response.text)
-    return data</code></pre>
-</details>
-</dd>
-<dt id="ieugwaspy.query.api_status"><code class="name flex">
-<span>def <span class="ident">api_status</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<section class="desc"><p>Check API status</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>API status</dd>
-</dl></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def api_status():
-    &#34;&#34;&#34;Check API status
-
-    Returns:
-        data: API status 
-
-    &#34;&#34;&#34;
-    data = api_query(&#34;status&#34;)
-    return data</code></pre>
-</details>
-</dd>
 <dt id="ieugwaspy.query.associations"><code class="name flex">
-<span>def <span class="ident">associations</span></span>(<span>variantlist, id, proxies=1, r2=0.8, align_alleles=1, palindromes=1, maf_threshold=0.3, access_token='NULL')</span>
+<span>def <span class="ident">associations</span></span>(<span>variant, id, proxies=1, r2=0.8, align_alleles=1, palindromes=1, maf_threshold=0.3)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Retrieve associations for specific SNP/study combinations</p>
-<h2 id="parameters">Parameters</h2>
+<div class="desc"><p>Retrieve associations for specific SNP/study combinations</p>
+<h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>variantlist</code></strong></dt>
-<dd>list of variants (Python list)</dd>
-<dt><strong><code>id</code></strong></dt>
-<dd>list of study IDs (Python list)</dd>
-<dt><strong><code>proxies</code></strong></dt>
-<dd>proxies 0 or (default) 1 - indicating whether to look for proxies</dd>
-<dt><strong><code>r2</code></strong></dt>
-<dd>minimum proxy LD rsq value. Default=0.8</dd>
-<dt><strong><code>align_alleles</code></strong></dt>
-<dd>try to align tag alleles to target alleles (if proxies = 1). 1 = yes (default), 0 = no</dd>
-<dt><strong><code>palindromes</code></strong></dt>
-<dd>allow palindromic SNPs (if proxies = 1). 1 = yes (default), 0 = no</dd>
-<dt><strong><code>maf_threshold</code></strong></dt>
-<dd>MAF threshold to try to infer palindromic SNPs. Default = 0.3.</dd>
-<dt><strong><code>access_token</code></strong></dt>
-<dd>the OAuth access token</dd>
+<dt><strong><code>variant</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of variants, e.g. ["rs1205", "7:105561135", "7:105561135-105563135"]</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of OpenGWAS IDs, e.g. ["ieu-a-1239", "ieu-a-2"]</dd>
+<dt><strong><code>proxies</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>1</code> or <code>0</code>, whether to look for proxies (1, default) or not (0)</dd>
+<dt><strong><code>r2</code></strong> :&ensp;<code>float</code></dt>
+<dd>minimum proxy LD rsq value. Default = 0.8</dd>
+<dt><strong><code>align_alleles</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>1</code> or <code>0</code>, whether to try to align tag alleles to target alleles (1, default) or not (0). Only active when proxies = 1</dd>
+<dt><strong><code>palindromes</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>1</code> or <code>0</code>, whether to allow palindromic SNPs (1, default) or not (0). Only active when proxies = 1</dd>
+<dt><strong><code>maf_threshold</code></strong> :&ensp;<code>float</code></dt>
+<dd>MAF threshold to try to infer palindromic SNPs. Default = 0.3</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>json object as returned by API</dd>
-</dl></section>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def associations(
-    variantlist,
-    id,
-    proxies=1,
-    r2=0.8,
-    align_alleles=1,
-    palindromes=1,
-    maf_threshold=0.3,
-    access_token=cons.api_token,
+        variant,
+        id,
+        proxies=1,
+        r2=0.8,
+        align_alleles=1,
+        palindromes=1,
+        maf_threshold=0.3
 ):
     &#34;&#34;&#34;Retrieve associations for specific SNP/study combinations
 
-    Parameters:
-        variantlist: list of variants (Python list)
-        id: list of study IDs (Python list)
-        proxies: proxies 0 or (default) 1 - indicating whether to look for proxies
-        r2: minimum proxy LD rsq value. Default=0.8
-        align_alleles: try to align tag alleles to target alleles (if proxies = 1). 1 = yes (default), 0 = no
-        palindromes: allow palindromic SNPs (if proxies = 1). 1 = yes (default), 0 = no
-        maf_threshold: MAF threshold to try to infer palindromic SNPs. Default = 0.3.
-        access_token: the OAuth access token
+    Args:
+        variant (list): list of variants, e.g. [&#34;rs1205&#34;, &#34;7:105561135&#34;, &#34;7:105561135-105563135&#34;]
+        id (list): list of OpenGWAS IDs, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+        proxies (int): `1` or `0`, whether to look for proxies (1, default) or not (0)
+        r2 (float): minimum proxy LD rsq value. Default = 0.8
+        align_alleles (int): `1` or `0`, whether to try to align tag alleles to target alleles (1, default) or not (0). Only active when proxies = 1
+        palindromes (int): `1` or `0`, whether to allow palindromic SNPs (1, default) or not (0). Only active when proxies = 1
+        maf_threshold (float): MAF threshold to try to infer palindromic SNPs. Default = 0.3
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
     id = backwards.legacy_ids(id)
     data = {
-        &#34;variant&#34;: variantlist,
+        &#34;variant&#34;: variant,
         &#34;id&#34;: id,
         &#34;proxies&#34;: proxies,
         &#34;r2&#34;: r2,
         &#34;align_alleles&#34;: align_alleles,
         &#34;palindromes&#34;: palindromes,
-        &#34;maf_threshold&#34;: maf_threshold,
-        &#34;access_token&#34;: access_token,
+        &#34;maf_threshold&#34;: maf_threshold
     }
-    result = api_query(&#34;associations&#34;, query=data, method=&#34;POST&#34;)
-    return result</code></pre>
+    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data=data)</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.gwasinfo"><code class="name flex">
-<span>def <span class="ident">gwasinfo</span></span>(<span>id='', access_token='NULL')</span>
+<span>def <span class="ident">gwasinfo</span></span>(<span>id=[])</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This function will return GWAS study meta-data describing the specific studies selected by id</p>
-<h2 id="parameters">Parameters</h2>
+<div class="desc"><p>This function will return GWAS study meta-data describing the specific studies selected by id</p>
+<h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong></dt>
-<dd>ID(s) of specific studies (Python list)</dd>
-<dt><strong><code>access_token</code></strong></dt>
-<dd>the OAuth access token</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>list</code></dt>
+<dd>OpenGWAS IDs of specific studies, e.g. ["ieu-a-1239", "ieu-a-2"]</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>json object as returned by API</dd>
-</dl></section>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def gwasinfo(id=&#34;&#34;, access_token=cons.api_token):
+<pre><code class="python">def gwasinfo(id=[]):
     &#34;&#34;&#34;This function will return GWAS study meta-data describing the specific studies selected by id
 
-    Parameters:
-        id: ID(s) of specific studies (Python list)
-        access_token: the OAuth access token
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = &#34;,&#34;.join(id)
-    if id != &#34;&#34;:
-        data = api_query(&#34;gwasinfo/{}&#34;.format(id), access_token=access_token)
+    if id != []:
+        return _api_query(&#34;gwasinfo/{}&#34;.format(&#34;,&#34;.join(id)))
     else:
-        data = api_query(&#34;gwasinfo/list&#34;, access_token=access_token)
-    return data</code></pre>
+        return _api_query(&#34;gwasinfo&#34;)</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.phewas"><code class="name flex">
-<span>def <span class="ident">phewas</span></span>(<span>variantlist, pval=0.001, access_token='NULL')</span>
+<span>def <span class="ident">phewas</span></span>(<span>variant, pval=0.001, batch=[])</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database</p>
-<h2 id="parameters">Parameters</h2>
+<div class="desc"><p>Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database</p>
+<h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>variants</code></strong></dt>
-<dd>list of variants (Python list)</dd>
-<dt><strong><code>pval</code></strong></dt>
+<dt><strong><code>variant</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of variants, e.g. ["rs1205", "7:105561135", "7:105561135-105563135"]</dd>
+<dt><strong><code>pval</code></strong> :&ensp;<code>float</code></dt>
 <dd>p-value threshold</dd>
-<dt><strong><code>access_token</code></strong></dt>
-<dd>the OAuth access token</dd>
+<dt><strong><code>batch</code></strong> :&ensp;<code>list</code></dt>
+<dd>OpenGWAS data batches, e.g. ["ieu-a"]. Leave empty to search across all batches</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>json object as returned by API</dd>
-</dl></section>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def phewas(variantlist, pval=1e-3, access_token=cons.api_token):
+<pre><code class="python">def phewas(variant, pval=1e-3, batch=[]):
     &#34;&#34;&#34;Perform phenome-wide association analysis (PheWAS) of variant(s) across all traits in the IEU GWAS database
 
-    Parameters:
-        variants: list of variants (Python list)
-        pval: p-value threshold
-        access_token: the OAuth access token
+    Args:
+        variant (list): list of variants, e.g. [&#34;rs1205&#34;, &#34;7:105561135&#34;, &#34;7:105561135-105563135&#34;]
+        pval (float): p-value threshold
+        batch (list): OpenGWAS data batches, e.g. [&#34;ieu-a&#34;]. Leave empty to search across all batches
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    rsid = &#34;,&#34;.join(variants.variants_to_rsid(variantlist))
-    data = api_query(&#34;phewas/{}/{}&#34;.format(rsid, pval), access_token=access_token)
-    return data</code></pre>
+    rsid = &#34;,&#34;.join(variants.variants_to_rsid(variant))
+    data = {
+        &#34;variant&#34;: rsid,
+        &#34;pval&#34;: pval,
+        &#34;index_list&#34;: batch
+    }
+    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data=data)</code></pre>
+</details>
+</dd>
+<dt id="ieugwaspy.query.status"><code class="name flex">
+<span>def <span class="ident">status</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check API status</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def status():
+    &#34;&#34;&#34;Check API status
+
+    Returns:
+        result: JSON object as returned by API
+
+    &#34;&#34;&#34;
+    return _api_query(&#34;status&#34;)</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.tophits"><code class="name flex">
-<span>def <span class="ident">tophits</span></span>(<span>id, pval=5e-08, clump=1, r2=0.001, kb=10000, force_server=False, access_token='NULL')</span>
+<span>def <span class="ident">tophits</span></span>(<span>id, pval=5e-08, preclumped=1, clump=1, bychr=0, r2=0.001, kb=10000, pop='EUR', force_server=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Retrieve association data for specific SNP/study combinations </p>
-<h2 id="parameters">Parameters</h2>
+<div class="desc"><p>Retrieve association data for specific SNP/study combinations </p>
+<h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>id</code></strong></dt>
-<dd>list of study IDs (Python list)</dd>
-<dt><strong><code>pval</code></strong></dt>
+<dt><strong><code>id</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of OpenGWAS IDs, e.g. ["ieu-a-1239", "ieu-a-2"]</dd>
+<dt><strong><code>pval</code></strong> :&ensp;<code>float</code></dt>
 <dd>use this p-value threshold. Default = 5e-8</dd>
-<dt><strong><code>clump</code></strong></dt>
-<dd>whether to clump (1) or not (0). Default = 1</dd>
-<dt><strong><code>r2</code></strong></dt>
-<dd>use this clumping r2 threshold. Default is very strict, 0.001</dd>
-<dt><strong><code>kb</code></strong></dt>
-<dd>use this clumping kb window. Default is very strict, 10000</dd>
-<dt><strong><code>force_server</code></strong></dt>
-<dd>True/False. By default (False) will return preclumped hits. p-value threshold 5e-8, with r2 threshold 0.001 and kb threshold 10000, using only SNPs with MAF &gt; 0.01 in the European samples in 1000 genomes. If force_server = TRUE then will recompute using server side LD reference panel.</dd>
-<dt><strong><code>access_token</code></strong></dt>
-<dd>the OAuth access token</dd>
+<dt><strong><code>preclumped</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>1</code> or <code>0</code>, whether to use pre-clumped hits (1, default) or not (0)</dd>
+<dt><strong><code>clump</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>1</code> or <code>0</code>, whether to clump (1, default) or not (0)</dd>
+<dt><strong><code>bychr</code></strong> :&ensp;<code>int</code></dt>
+<dd><code>0</code> or <code>1</code>, whether to extract all at once (0, default) or by chromosome (1). There is a limit on query results so bychr might be required for some well-powered datasets</dd>
+<dt><strong><code>r2</code></strong> :&ensp;<code>float</code></dt>
+<dd>use this clumping r2 threshold. Default = 0.001 (very strict)</dd>
+<dt><strong><code>kb</code></strong> :&ensp;<code>int</code></dt>
+<dd>use this clumping kb window. Default = 10000 (very strict)</dd>
+<dt><strong><code>pop</code></strong> :&ensp;<code>str</code></dt>
+<dd><code>EUR</code>, <code>SAS</code>, <code>EAS</code>, <code>AFR</code>, <code>AMR</code> or <code>legacy</code>, indicating the population. Default = EUR</dd>
+<dt><strong><code>force_server</code></strong> :&ensp;<code>bool</code></dt>
+<dd><code>True</code> or <code>False</code>. By False (default) it will return preclumped hits with pval = 5e-8, r2 = 0.001 and kb = 10000 and using only SNPs with MAF &gt; 0.01 in the European (EUR) samples in 1000 genomes. If TRUE then it will recompute using server side LD reference panel</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>data</code></strong></dt>
-<dd>json object as returned by API</dd>
-</dl></section>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def tophits(
-    id,
-    pval=5e-8,
-    clump=1,
-    r2=0.001,
-    kb=10000,
-    force_server=False,
-    access_token=cons.api_token,
+        id,
+        pval=5e-8,
+        preclumped=1,
+        clump=1,
+        bychr=0,
+        r2=0.001,
+        kb=10000,
+        pop=&#34;EUR&#34;,
+        force_server=False
 ):
     &#34;&#34;&#34;Retrieve association data for specific SNP/study combinations 
 
-    Parameters:
-        id: list of study IDs (Python list)
-        pval: use this p-value threshold. Default = 5e-8
-        clump: whether to clump (1) or not (0). Default = 1
-        r2: use this clumping r2 threshold. Default is very strict, 0.001
-        kb: use this clumping kb window. Default is very strict, 10000
-        force_server: True/False. By default (False) will return preclumped hits. p-value threshold 5e-8, with r2 threshold 0.001 and kb threshold 10000, using only SNPs with MAF &gt; 0.01 in the European samples in 1000 genomes. If force_server = TRUE then will recompute using server side LD reference panel.
-        access_token: the OAuth access token
+    Args:
+        id (list): list of OpenGWAS IDs, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+        pval (float): use this p-value threshold. Default = 5e-8
+        preclumped (int): `1` or `0`, whether to use pre-clumped hits (1, default) or not (0)
+        clump (int): `1` or `0`, whether to clump (1, default) or not (0)
+        bychr (int): `0` or `1`, whether to extract all at once (0, default) or by chromosome (1). There is a limit on query results so bychr might be required for some well-powered datasets
+        r2 (float): use this clumping r2 threshold. Default = 0.001 (very strict)
+        kb (int): use this clumping kb window. Default = 10000 (very strict)
+        pop (str): `EUR`, `SAS`, `EAS`, `AFR`, `AMR` or `legacy`, indicating the population. Default = EUR
+        force_server (bool): `True` or `False`. By False (default) it will return preclumped hits with pval = 5e-8, r2 = 0.001 and kb = 10000 and using only SNPs with MAF &gt; 0.01 in the European (EUR) samples in 1000 genomes. If TRUE then it will recompute using server side LD reference panel
 
     Returns:
-        data: json object as returned by API
+        result: JSON object as returned by API
 
     &#34;&#34;&#34;
     id = backwards.legacy_ids(id)
-    if clump == 1 and r2 == 0.001 and kb == 10000 and pval == 5e-8:
-        preclumped = 1
+    if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
+        preclumped = 0 if force_server else 1
     else:
-        preclumped = 0
-    if preclumped == 1 and force_server:
         preclumped = 0
     data = {
         &#34;id&#34;: id,
         &#34;pval&#34;: pval,
         &#34;preclumped&#34;: preclumped,
         &#34;clump&#34;: clump,
+        &#34;bychr&#34;: bychr,
         &#34;r2&#34;: r2,
         &#34;kb&#34;: kb,
-        &#34;access_token&#34;: access_token,
+        &#34;pop&#34;: pop
     }
-    result = api_query(&#34;tophits&#34;, query=data, method=&#34;POST&#34;)
-    return result</code></pre>
+    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data=data)</code></pre>
 </details>
 </dd>
 </dl>
@@ -535,12 +479,11 @@ def tophits(
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="two-column">
-<li><code><a title="ieugwaspy.query.api_query" href="#ieugwaspy.query.api_query">api_query</a></code></li>
-<li><code><a title="ieugwaspy.query.api_status" href="#ieugwaspy.query.api_status">api_status</a></code></li>
+<ul class="">
 <li><code><a title="ieugwaspy.query.associations" href="#ieugwaspy.query.associations">associations</a></code></li>
 <li><code><a title="ieugwaspy.query.gwasinfo" href="#ieugwaspy.query.gwasinfo">gwasinfo</a></code></li>
 <li><code><a title="ieugwaspy.query.phewas" href="#ieugwaspy.query.phewas">phewas</a></code></li>
+<li><code><a title="ieugwaspy.query.status" href="#ieugwaspy.query.status">status</a></code></li>
 <li><code><a title="ieugwaspy.query.tophits" href="#ieugwaspy.query.tophits">tophits</a></code></li>
 </ul>
 </li>
@@ -548,9 +491,7 @@ def tophits(
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.2</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
