@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
     name="ieugwaspy",
-    version="0.1.11",
+    version="1.0.0",
     author="Tom Gaunt",
     author_email="tom@biocompute.org.uk",
     description="Python interface to IEU GWAS database API",
