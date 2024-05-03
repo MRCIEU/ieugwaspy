@@ -17,7 +17,7 @@ jobs:
       OPENGWAS_X_TEST_MODE_KEY: ${{ secrets.OPENGWAS_X_TEST_MODE_KEY }}
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
     - uses: actions/checkout@v2
