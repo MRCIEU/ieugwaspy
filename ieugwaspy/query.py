@@ -1,13 +1,35 @@
 """API query functions
 """
+import datetime
+import time
 import requests
-
 from retry import retry
 from urllib.parse import urljoin
 
 import ieugwaspy.config as config
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
+
+
+def _check_allowance_reset_timestamp():
+    """Check existence of config.allowance_reset_timestamp, reset it when the time has passed or if not, halt the request
+    """
+    if config.allowance_reset_timestamp == 0:
+        return
+    if int(time.time()) > config.allowance_reset_timestamp:
+        config.allowance_reset_timestamp = 0
+    else:
+        raise Exception("You have run out of allowance. Please retry after {}".format(datetime.datetime.strftime(datetime.datetime.fromtimestamp(config.allowance_reset_timestamp).astimezone(), '%Y-%m-%d %H:%M %Z')))
+
+
+def _save_allowance_reset_timestamp(headers):
+    """Calculate and save the retry timestamp when there is no remaining allowance
+
+    Args:
+        headers: response headers
+    """
+    if headers.get('X-Allowance-Remaining', None) == "0":
+        config.allowance_reset_timestamp = int(time.time()) + int(headers.get('Retry-After', 0))
 
 
 @retry(tries=5, delay=2, backoff=2)
@@ -39,6 +61,12 @@ def _api_query(path, method="GET", data=[]):
         raise Exception("Invalid API method")
 
     try:
+        _check_allowance_reset_timestamp()
+    except Exception as e:
+        return str(e)
+
+    try:
+        _save_allowance_reset_timestamp(response.headers)
         return response.json()
     except Exception as e:
         raise Exception("Unable to parse the response. " + str(e))

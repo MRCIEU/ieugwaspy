@@ -20,6 +20,8 @@ urls = {
 }
 url_obtain_jwt = "https://api.opengwas.io/profile/"
 
+allowance_reset_timestamp = 0
+
 
 def _save_env():
     """Save env variables to .ieugwaspy.json
