@@ -32,6 +32,8 @@
 import ieugwaspy.config as config
 import webbrowser
 
+from .query import status
+
 
 def select_api(key=&#34;public&#34;):
     &#34;&#34;&#34;Select API base URL (no return value)
@@ -39,10 +41,14 @@ def select_api(key=&#34;public&#34;):
     Args:
         key: the short name for the required API base url
 
+    Returns:
+        data: JSON object as returned by API
+
     &#34;&#34;&#34;
     if key in config.urls.keys():
         config.env[&#34;base_url&#34;] = config.urls[key]
         print(&#34;API server is now: &#34; + config.env[&#34;base_url&#34;])
+        return status()
     else:
         print(&#34;Please select one from the following: \n&#34; + &#34;\n&#34;.join([k + &#34; - &#34; + v for k, v in config.urls.items()]))
 
@@ -88,6 +94,11 @@ def get_jwt():
 <dl>
 <dt><strong><code>key</code></strong></dt>
 <dd>the short name for the required API base url</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>data</code></dt>
+<dd>JSON object as returned by API</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -99,10 +110,14 @@ def get_jwt():
     Args:
         key: the short name for the required API base url
 
+    Returns:
+        data: JSON object as returned by API
+
     &#34;&#34;&#34;
     if key in config.urls.keys():
         config.env[&#34;base_url&#34;] = config.urls[key]
         print(&#34;API server is now: &#34; + config.env[&#34;base_url&#34;])
+        return status()
     else:
         print(&#34;Please select one from the following: \n&#34; + &#34;\n&#34;.join([k + &#34; - &#34; + v for k, v in config.urls.items()]))</code></pre>
 </details>

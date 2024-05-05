@@ -29,14 +29,36 @@
 </summary>
 <pre><code class="python">&#34;&#34;&#34;API query functions
 &#34;&#34;&#34;
+import datetime
+import time
 import requests
-
 from retry import retry
 from urllib.parse import urljoin
 
 import ieugwaspy.config as config
 import ieugwaspy.variants as variants
 import ieugwaspy.backwards as backwards
+
+
+def _check_allowance_reset_timestamp():
+    &#34;&#34;&#34;Check existence of config.allowance_reset_timestamp, reset it when the time has passed or if not, halt the request
+    &#34;&#34;&#34;
+    if config.allowance_reset_timestamp == 0:
+        return
+    if int(time.time()) &gt; config.allowance_reset_timestamp:
+        config.allowance_reset_timestamp = 0
+    else:
+        raise Exception(&#34;You have run out of allowance. Please retry after {}&#34;.format(datetime.datetime.strftime(datetime.datetime.fromtimestamp(config.allowance_reset_timestamp).astimezone(), &#39;%Y-%m-%d %H:%M %Z&#39;)))
+
+
+def _save_allowance_reset_timestamp(headers):
+    &#34;&#34;&#34;Calculate and save the retry timestamp when there is no remaining allowance
+
+    Args:
+        headers: response headers
+    &#34;&#34;&#34;
+    if headers.get(&#39;X-Allowance-Remaining&#39;, None) == &#34;0&#34;:
+        config.allowance_reset_timestamp = int(time.time()) + int(headers.get(&#39;Retry-After&#39;, 0))
 
 
 @retry(tries=5, delay=2, backoff=2)
@@ -68,6 +90,12 @@ def _api_query(path, method=&#34;GET&#34;, data=[]):
         raise Exception(&#34;Invalid API method&#34;)
 
     try:
+        _check_allowance_reset_timestamp()
+    except Exception as e:
+        return str(e)
+
+    try:
+        _save_allowance_reset_timestamp(response.headers)
         return response.json()
     except Exception as e:
         raise Exception(&#34;Unable to parse the response. &#34; + str(e))
@@ -81,6 +109,16 @@ def status():
 
     &#34;&#34;&#34;
     return _api_query(&#34;status&#34;)
+
+
+def user():
+    &#34;&#34;&#34;Get user information
+
+    Returns:
+        result: JSON object as returned by API
+
+    &#34;&#34;&#34;
+    return _api_query(&#34;user&#34;)
 
 
 def gwasinfo(id=[]):
@@ -462,6 +500,30 @@ def tophits(
     return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data=data)</code></pre>
 </details>
 </dd>
+<dt id="ieugwaspy.query.user"><code class="name flex">
+<span>def <span class="ident">user</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get user information</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def user():
+    &#34;&#34;&#34;Get user information
+
+    Returns:
+        result: JSON object as returned by API
+
+    &#34;&#34;&#34;
+    return _api_query(&#34;user&#34;)</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -479,12 +541,13 @@ def tophits(
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="ieugwaspy.query.associations" href="#ieugwaspy.query.associations">associations</a></code></li>
 <li><code><a title="ieugwaspy.query.gwasinfo" href="#ieugwaspy.query.gwasinfo">gwasinfo</a></code></li>
 <li><code><a title="ieugwaspy.query.phewas" href="#ieugwaspy.query.phewas">phewas</a></code></li>
 <li><code><a title="ieugwaspy.query.status" href="#ieugwaspy.query.status">status</a></code></li>
 <li><code><a title="ieugwaspy.query.tophits" href="#ieugwaspy.query.tophits">tophits</a></code></li>
+<li><code><a title="ieugwaspy.query.user" href="#ieugwaspy.query.user">user</a></code></li>
 </ul>
 </li>
 </ul>
