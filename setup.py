@@ -1,10 +1,12 @@
 import setuptools
 
+from ieugwaspy.config import __version__
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
     name="ieugwaspy",
-    version="1.0.2",
+    version=__version__,
     author="Tom Gaunt",
     author_email="tom@biocompute.org.uk",
     description="Python interface to IEU GWAS database API",

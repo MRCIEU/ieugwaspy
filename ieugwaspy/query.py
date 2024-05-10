@@ -47,7 +47,9 @@ def _api_query(path, method="GET", data=[]):
     """
     url = urljoin(config.env["base_url"], path)
 
-    headers = {}
+    headers = {
+        "X-API-SOURCE": "ieugwaspy/" + config.__version__
+    }
     if config.env["jwt"]:
         headers["Authorization"] = "Bearer " + config.env["jwt"]
     if config.env["test_mode_key"]:
