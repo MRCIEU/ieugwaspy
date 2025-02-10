@@ -62,7 +62,7 @@ def _save_allowance_reset_timestamp(headers):
 
 
 @retry(tries=5, delay=2, backoff=2)
-def _api_query(path, method=&#34;GET&#34;, data=[]):
+def _api_query(path, method=&#34;GET&#34;, data={}):
     &#34;&#34;&#34;This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
     Args:
@@ -76,7 +76,9 @@ def _api_query(path, method=&#34;GET&#34;, data=[]):
     &#34;&#34;&#34;
     url = urljoin(config.env[&#34;base_url&#34;], path)
 
-    headers = {}
+    headers = {
+        &#34;X-API-SOURCE&#34;: &#34;ieugwaspy/&#34; + config.__version__
+    }
     if config.env[&#34;jwt&#34;]:
         headers[&#34;Authorization&#34;] = &#34;Bearer &#34; + config.env[&#34;jwt&#34;]
     if config.env[&#34;test_mode_key&#34;]:
@@ -132,9 +134,26 @@ def gwasinfo(id=[]):
 
     &#34;&#34;&#34;
     if id != []:
-        return _api_query(&#34;gwasinfo/{}&#34;.format(&#34;,&#34;.join(id)))
+        return _api_query(&#34;gwasinfo&#34;, method=&#34;POST&#34;, data={
+            &#34;id&#34;: backwards.legacy_ids(id)
+        })
     else:
         return _api_query(&#34;gwasinfo&#34;)
+
+
+def gwasinfo_files(id):
+    &#34;&#34;&#34;This function will return temporary links to files available for the specific studies selected by id
+
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+
+    Returns:
+        result: JSON object as returned by API
+
+    &#34;&#34;&#34;
+    return _api_query(&#34;gwasinfo/files&#34;, method=&#34;POST&#34;, data={
+        &#34;id&#34;: backwards.legacy_ids(id)
+    })
 
 
 def associations(
@@ -161,17 +180,15 @@ def associations(
         result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = backwards.legacy_ids(id)
-    data = {
+    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data={
         &#34;variant&#34;: variant,
-        &#34;id&#34;: id,
+        &#34;id&#34;: backwards.legacy_ids(id),
         &#34;proxies&#34;: proxies,
         &#34;r2&#34;: r2,
         &#34;align_alleles&#34;: align_alleles,
         &#34;palindromes&#34;: palindromes,
         &#34;maf_threshold&#34;: maf_threshold
-    }
-    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data=data)
+    })
 
 
 def phewas(variant, pval=1e-3, batch=[]):
@@ -187,12 +204,11 @@ def phewas(variant, pval=1e-3, batch=[]):
 
     &#34;&#34;&#34;
     rsid = &#34;,&#34;.join(variants.variants_to_rsid(variant))
-    data = {
+    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data={
         &#34;variant&#34;: rsid,
         &#34;pval&#34;: pval,
         &#34;index_list&#34;: batch
-    }
-    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data=data)
+    })
 
 
 def tophits(
@@ -223,13 +239,12 @@ def tophits(
         result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = backwards.legacy_ids(id)
     if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
         preclumped = 0 if force_server else 1
     else:
         preclumped = 0
-    data = {
-        &#34;id&#34;: id,
+    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data={
+        &#34;id&#34;: backwards.legacy_ids(id),
         &#34;pval&#34;: pval,
         &#34;preclumped&#34;: preclumped,
         &#34;clump&#34;: clump,
@@ -237,8 +252,7 @@ def tophits(
         &#34;r2&#34;: r2,
         &#34;kb&#34;: kb,
         &#34;pop&#34;: pop
-    }
-    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data=data)</code></pre>
+    })</code></pre>
 </details>
 </section>
 <section>
@@ -303,17 +317,15 @@ def tophits(
         result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = backwards.legacy_ids(id)
-    data = {
+    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data={
         &#34;variant&#34;: variant,
-        &#34;id&#34;: id,
+        &#34;id&#34;: backwards.legacy_ids(id),
         &#34;proxies&#34;: proxies,
         &#34;r2&#34;: r2,
         &#34;align_alleles&#34;: align_alleles,
         &#34;palindromes&#34;: palindromes,
         &#34;maf_threshold&#34;: maf_threshold
-    }
-    return _api_query(&#34;associations&#34;, method=&#34;POST&#34;, data=data)</code></pre>
+    })</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.gwasinfo"><code class="name flex">
@@ -346,9 +358,45 @@ def tophits(
 
     &#34;&#34;&#34;
     if id != []:
-        return _api_query(&#34;gwasinfo/{}&#34;.format(&#34;,&#34;.join(id)))
+        return _api_query(&#34;gwasinfo&#34;, method=&#34;POST&#34;, data={
+            &#34;id&#34;: backwards.legacy_ids(id)
+        })
     else:
         return _api_query(&#34;gwasinfo&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ieugwaspy.query.gwasinfo_files"><code class="name flex">
+<span>def <span class="ident">gwasinfo_files</span></span>(<span>id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function will return temporary links to files available for the specific studies selected by id</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>list</code></dt>
+<dd>OpenGWAS IDs of specific studies, e.g. ["ieu-a-1239", "ieu-a-2"]</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>result</code></dt>
+<dd>JSON object as returned by API</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gwasinfo_files(id):
+    &#34;&#34;&#34;This function will return temporary links to files available for the specific studies selected by id
+
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. [&#34;ieu-a-1239&#34;, &#34;ieu-a-2&#34;]
+
+    Returns:
+        result: JSON object as returned by API
+
+    &#34;&#34;&#34;
+    return _api_query(&#34;gwasinfo/files&#34;, method=&#34;POST&#34;, data={
+        &#34;id&#34;: backwards.legacy_ids(id)
+    })</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.phewas"><code class="name flex">
@@ -387,12 +435,11 @@ def tophits(
 
     &#34;&#34;&#34;
     rsid = &#34;,&#34;.join(variants.variants_to_rsid(variant))
-    data = {
+    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data={
         &#34;variant&#34;: rsid,
         &#34;pval&#34;: pval,
         &#34;index_list&#34;: batch
-    }
-    return _api_query(&#34;phewas&#34;, method=&#34;POST&#34;, data=data)</code></pre>
+    })</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.status"><code class="name flex">
@@ -482,13 +529,12 @@ def tophits(
         result: JSON object as returned by API
 
     &#34;&#34;&#34;
-    id = backwards.legacy_ids(id)
     if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
         preclumped = 0 if force_server else 1
     else:
         preclumped = 0
-    data = {
-        &#34;id&#34;: id,
+    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data={
+        &#34;id&#34;: backwards.legacy_ids(id),
         &#34;pval&#34;: pval,
         &#34;preclumped&#34;: preclumped,
         &#34;clump&#34;: clump,
@@ -496,8 +542,7 @@ def tophits(
         &#34;r2&#34;: r2,
         &#34;kb&#34;: kb,
         &#34;pop&#34;: pop
-    }
-    return _api_query(&#34;tophits&#34;, method=&#34;POST&#34;, data=data)</code></pre>
+    })</code></pre>
 </details>
 </dd>
 <dt id="ieugwaspy.query.user"><code class="name flex">
@@ -544,6 +589,7 @@ def tophits(
 <ul class="two-column">
 <li><code><a title="ieugwaspy.query.associations" href="#ieugwaspy.query.associations">associations</a></code></li>
 <li><code><a title="ieugwaspy.query.gwasinfo" href="#ieugwaspy.query.gwasinfo">gwasinfo</a></code></li>
+<li><code><a title="ieugwaspy.query.gwasinfo_files" href="#ieugwaspy.query.gwasinfo_files">gwasinfo_files</a></code></li>
 <li><code><a title="ieugwaspy.query.phewas" href="#ieugwaspy.query.phewas">phewas</a></code></li>
 <li><code><a title="ieugwaspy.query.status" href="#ieugwaspy.query.status">status</a></code></li>
 <li><code><a title="ieugwaspy.query.tophits" href="#ieugwaspy.query.tophits">tophits</a></code></li>

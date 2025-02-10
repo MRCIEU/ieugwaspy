@@ -45,6 +45,7 @@ Args:
 &#34;&#34;&#34;
 import json
 
+__version__ = &#34;1.0.5&#34;
 
 env = {
     &#34;base_url&#34;: &#34;https://api.opengwas.io/api/&#34;,
@@ -82,7 +83,7 @@ def _load_env():
                     env[k] = env_loaded[k]
             print(&#34;Env variables have been loaded from .ieugwaspy.json as follows:\n&#34;, env)
     except Exception as e:
-        print(&#34;The .ieugwaspy.json file does not exist. Now using default env variables.&#34;)</code></pre>
+        print(&#34;The .ieugwaspy.json file does not yet exist: using default env variables.\n\nTo setup JWT authentication (which will create .ieugwas.json) please run ieugwaspy.get_jwt().&#34;)</code></pre>
 </details>
 </section>
 <section>
