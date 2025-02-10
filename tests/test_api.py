@@ -2,7 +2,7 @@
 
 def test_apistatus(ieugwaspy_instance):
     data = ieugwaspy_instance.status()
-    assert data["API version"]
+    assert data["[API] Version"]
 
 
 def test_user(ieugwaspy_instance):
