@@ -33,7 +33,7 @@ def _save_allowance_reset_timestamp(headers):
 
 
 @retry(tries=5, delay=2, backoff=2)
-def _api_query(path, method="GET", data=[]):
+def _api_query(path, method="GET", data={}):
     """This is a general-purpose function called by other functions to query the API and return the resulting data in JSON format.  
 
     Args:
@@ -105,9 +105,26 @@ def gwasinfo(id=[]):
 
     """
     if id != []:
-        return _api_query("gwasinfo/{}".format(",".join(id)))
+        return _api_query("gwasinfo", method="POST", data={
+            "id": backwards.legacy_ids(id)
+        })
     else:
         return _api_query("gwasinfo")
+
+
+def gwasinfo_files(id):
+    """This function will return temporary links to files available for the specific studies selected by id
+
+    Args:
+        id (list): OpenGWAS IDs of specific studies, e.g. ["ieu-a-1239", "ieu-a-2"]
+
+    Returns:
+        result: JSON object as returned by API
+
+    """
+    return _api_query("gwasinfo/files", method="POST", data={
+        "id": backwards.legacy_ids(id)
+    })
 
 
 def associations(
@@ -134,17 +151,15 @@ def associations(
         result: JSON object as returned by API
 
     """
-    id = backwards.legacy_ids(id)
-    data = {
+    return _api_query("associations", method="POST", data={
         "variant": variant,
-        "id": id,
+        "id": backwards.legacy_ids(id),
         "proxies": proxies,
         "r2": r2,
         "align_alleles": align_alleles,
         "palindromes": palindromes,
         "maf_threshold": maf_threshold
-    }
-    return _api_query("associations", method="POST", data=data)
+    })
 
 
 def phewas(variant, pval=1e-3, batch=[]):
@@ -160,12 +175,11 @@ def phewas(variant, pval=1e-3, batch=[]):
 
     """
     rsid = ",".join(variants.variants_to_rsid(variant))
-    data = {
+    return _api_query("phewas", method="POST", data={
         "variant": rsid,
         "pval": pval,
         "index_list": batch
-    }
-    return _api_query("phewas", method="POST", data=data)
+    })
 
 
 def tophits(
@@ -196,13 +210,12 @@ def tophits(
         result: JSON object as returned by API
 
     """
-    id = backwards.legacy_ids(id)
     if clump == 1 and pval == 5e-8 and r2 == 0.001 and kb == 10000:
         preclumped = 0 if force_server else 1
     else:
         preclumped = 0
-    data = {
-        "id": id,
+    return _api_query("tophits", method="POST", data={
+        "id": backwards.legacy_ids(id),
         "pval": pval,
         "preclumped": preclumped,
         "clump": clump,
@@ -210,5 +223,4 @@ def tophits(
         "r2": r2,
         "kb": kb,
         "pop": pop
-    }
-    return _api_query("tophits", method="POST", data=data)
+    })

@@ -2,7 +2,7 @@
 
 def test_apistatus(ieugwaspy_instance):
     data = ieugwaspy_instance.status()
-    assert data["[API] Version"]
+    assert data["API__VERSION"]
 
 
 def test_user(ieugwaspy_instance):
@@ -21,11 +21,22 @@ def test_gwasinfo_single(ieugwaspy_instance):
 
 
 def test_gwasinfo_multiple(ieugwaspy_instance):
-    data = ieugwaspy_instance.gwasinfo(['ieu-a-1239', 'ebi-a-GCST006867'])
+    data = ieugwaspy_instance.gwasinfo(["ieu-a-1239", "ieu-a-998", "ebi-a-GCST006867"])
     assert len(data) == 2
-    assert len(data[0]) > 0
-    assert data[0]["pmid"] == 30038396
-    assert data[1]["pmid"] == 30054458
+    assert "ieu-a-998" not in data
+    assert all([data[i]["pmid"] in [30038396, 30054458] for i in range(len(data))])
+
+
+def test_gwasinfo_files_single(ieugwaspy_instance):
+    data = ieugwaspy_instance.gwasinfo_files(["ieu-a-1239"])
+    assert len(data["ieu-a-1239"]) >= 1
+
+
+def test_gwasinfo_files_multiple(ieugwaspy_instance):
+    data = ieugwaspy_instance.gwasinfo_files(["ieu-a-1239", "ieu-a-998", "ebi-a-GCST006867"])
+    assert len(data) == 2
+    assert "ieu-a-998" not in data
+    assert len(data["ieu-a-1239"]) > 0 and len(data["ebi-a-GCST006867"]) > 0
 
 
 def test_gwasinfo_all(ieugwaspy_instance):
