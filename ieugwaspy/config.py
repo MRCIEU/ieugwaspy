@@ -7,7 +7,7 @@ Args:
 """
 import json
 
-__version__ = "1.0.5"
+__version__ = "1.0.4"
 
 env = {
     "base_url": "https://api.opengwas.io/api/",
